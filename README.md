@@ -1,1 +1,1 @@
-#GDSC 백엔드 Pre-Study
+# GDSC 백엔드 Pre-Study
