@@ -1,41 +1,19 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { NoticeRepository } from './notice.repository';
 
 @Injectable()
 export class NoticeService {
-  noticeID = 1;
-  noticeList: {
-    id: number;
-    title: string;
-    content: string;
-    createdAt: Date;
-  }[] = [];
+  constructor(private readonly noticeRepository: NoticeRepository) {}
 
-  getNotice(id: string) {
-    const noticeId = parseInt(id);
-    if (isNaN(noticeId)) {
-      throw new BadRequestException('Invalid notice ID');
-    }
-    const [matchedNotice] = this.noticeList.filter(
-      (notice) => notice.id === noticeId,
-    );
-    return matchedNotice;
+  async getNotice(id: string) {
+    return this.noticeRepository.getNotice(id);
   }
 
-  createNotice({ title, content }: { title: string; content: string }) {
-    if (!title || !content) {
+  async createNotice({ title, content }: { title: string; content: string }) {
+    if (title === undefined || content === undefined) {
       throw new BadRequestException();
     }
-    const newNotice = {
-      id: this.noticeID,
-      title,
-      content,
-      createdAt: new Date(),
-    };
-    this.noticeList.push(newNotice);
-    this.noticeID += 1;
-    return {
-      message: 'created',
-      data: newNotice,
-    };
+
+    return this.noticeRepository.createNotice(title, content);
   }
 }
