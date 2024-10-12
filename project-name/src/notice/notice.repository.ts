@@ -34,4 +34,32 @@ export class NoticeRepository {
         throw new InternalServerErrorException('Unknown Error');
       });
   }
+  async updateNotice(id: string, title: string, content: string) {
+    return this.prismaService.notice
+      .update({
+        where: { id: parseInt(id) },
+        data: {
+          title,
+          content,
+        },
+      })
+      .catch((error) => {
+        if (error instanceof PrismaClientKnownRequestError) {
+          throw new InternalServerErrorException('DB Error');
+        }
+        throw new InternalServerErrorException('Unknown Error');
+      });
+  }
+  async deleteNotice(id: string) {
+    return this.prismaService.notice
+      .delete({
+        where: { id: parseInt(id) },
+      })
+      .catch((error) => {
+        if (error instanceof PrismaClientKnownRequestError) {
+          throw new InternalServerErrorException('DB Error');
+        }
+        throw new InternalServerErrorException('Unknown Error');
+      });
+  }
 }

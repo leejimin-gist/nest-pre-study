@@ -16,4 +16,13 @@ export class NoticeService {
 
     return this.noticeRepository.createNotice(title, content);
   }
+  async updateNotice(
+    id: string,
+    { title, content }: { title: string; content: string },
+  ) {
+    return this.noticeRepository.updateNotice(id, title, content);
+  }
+  async deleteNotice(id: string) {
+    return this.noticeRepository.deleteNotice(id);
+  }
 }
