@@ -1,6 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { error } from 'console';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
